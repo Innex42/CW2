@@ -1,4 +1,4 @@
-- name: Docker installation
+- name: CW2 installations
   hosts: localhost
   user: ubuntu
   become: yes
@@ -53,13 +53,13 @@
     - name: 11. Create First Deployment using image from DockerHub
       become: yes
       shell:
-        cmd: kubectl create deployment cw2 --image=gcr.io/innex42/cw2:latest
+        cmd: kubectl create deployment innex42/cw2 --image=gcr.io/innex42/cw2:latest
 
     - name: 12. Create Service for Appliction
       shell:
-        cmd: kubectl expose deployment/cw2 --type=="NodePort" --port 8080 --name node-port-service
+        cmd: kubectl expose deployment/innex42/cw2 --type=="NodePort" --port 8080 --name node-port-service
 
     - name: 13. Scale Deployments
       shell:
-        cmd: kubectl scale deployments/cw2 --replicas=4
+        cmd: kubectl scale deployments/innex42/cw2 --replicas=4
 
