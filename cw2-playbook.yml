@@ -42,7 +42,7 @@
 
     - name: 9. Change file permissions so that it can be executed
       file: 
-        path: "/usr/local/bin" 
+        path: "/usr/local/bin/minikube" 
         mode: "+x"
 
     - name: 10. Start Minikube
