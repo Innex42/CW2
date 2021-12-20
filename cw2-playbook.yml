@@ -46,6 +46,7 @@
         mode: "+x"
 
     - name: 10. Start Minikube
+      become: no
       shell:
         cmd: minikube start
 
