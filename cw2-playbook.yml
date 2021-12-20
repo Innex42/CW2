@@ -51,6 +51,7 @@
         cmd: minikube start
 
     - name: 11. Create First Deployment using image from DockerHub
+      become: yes
       shell:
         cmd: kubectl create deployment docker-registry --image=innex42/cw2:latest
 
