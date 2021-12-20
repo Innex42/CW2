@@ -53,7 +53,7 @@
     - name: 11. Create First Deployment using image from DockerHub
       become: yes
       shell:
-        cmd: kubectl create deployment docker-registry --image=innex42/cw2:latest
+        cmd: kubectl create deployment cw2 --image=gcr.io/innex42/cw2:latest
 
     - name: 12. Create Service for Appliction
       shell:
