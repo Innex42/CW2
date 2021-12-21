@@ -1,0 +1,13 @@
+- name: CW2 create service and scale deployments
+  hosts: localhost
+  user: ubuntu
+  become: no
+
+  tasks:
+    - name: 12. Create Service for Appliction
+      shell:
+        cmd: kubectl expose deployment/cw2 --type="NodePort" --port 8080 --name node-port-service
+
+    - name: 13. Scale Deployments
+      shell:
+        cmd: kubectl scale deployments/cw2 --replicas=4
