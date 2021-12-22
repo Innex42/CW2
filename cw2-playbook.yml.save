@@ -1,0 +1,64 @@
+- name: Docker installation
+  hosts: localhost
+  user: ubuntu
+  become: yes
+
+  tasks:
+    - name: 1. Update package manager
+      apt:
+        update_cache: yes
+
+    - name: 2. Install dependency packages
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - apt-transport-https
+
+    - name: 3. Get APT key
+      shell:
+        cmd: curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+    - name: 4. Echo link and sudo tee file
+      shell:
+        cmd: echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+
+    - name: 5. Update package manager
+      apt:
+        update_cache: yes
+
+    - name: 6. Install Kubectl
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - kubectl
+
+    - name: 7. Get latest version of Minikube
+      shell:
+        cmd: curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+    - name: 8. Move Minikube
+      shell:
+        cmd: sudo mv minikube /usr/local/bin/
+
+    - name: 9. Change file permissions so that it can be executed
+      file: 
+        path: "/usr/local/bin" 
+        mode: "+x"
+
+    - name: 10. Start Minikube
+      
+shell:
+        cmd: minikube start
+
+    - name: 11. Create First Deployment using image from DockerHub
+      shell:
+        cmd: kubectl create deployment docker-registry --image=innex42/cw2:latest
+
+    - name: 12. Create Service for Appliction
+      shell:
+        cmd: kubectl expose deployment/cw2 --type=="NodePort" --port 8080 --name node-port-service
+
+    - name: 13. Scale Deployments
+      shell:
+        cmd: kubectl scale deployments/cw2 --replicas=4
+
