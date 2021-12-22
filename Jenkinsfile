@@ -23,7 +23,7 @@ pipeline {
       steps {
         script{
           docker.withRegistry( '' , 'docker-hub-credentials') {
-          dockerImage.push()
+          Image.push()
         }
         }
       }
