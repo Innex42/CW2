@@ -12,7 +12,6 @@ pipeline {
     stage('Docker image') {
       steps {
         script {
-          def versionFile = readFile('VERSION')
           version = "$BUILD_NUMBER"
           
           image = docker.build(imageName + ':' + version)
